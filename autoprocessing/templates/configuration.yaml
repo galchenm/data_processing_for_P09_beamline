@@ -1,0 +1,15 @@
+crystallography:
+    ORGX: 1255.3
+    ORGY: 1152.9
+    distance_offset: 0 # [mm]
+    command_for_processing_rotational: "xds_par" 
+    raw_directory: "/asap3/petra3/gpfs/p09/2024/data/11020444/raw"
+    converted_directory: "/asap3/petra3/gpfs/p09/2024/data/11020444/processed/galchenm/convert"
+    processed_directory: "/asap3/petra3/gpfs/p09/2024/data/11020444/processed/galchenm/mosflm_wo_cell_processing"
+    XDS_INP_template: $XDS_INP_template
+    XDS_INP_wedges_template: $XDS_INP_wedges_template
+    geometry_for_conversion: $geometry_for_conversion
+    geometry_for_processing: $geometry_for_processing
+    data_h5path: "/entry/instrument/detector/data"
+    cell_file: "None"
+    

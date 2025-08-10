@@ -1,0 +1,76 @@
+{
+    "applicant": {
+        "email": "alke.meents@desy.de",
+        "institute": "Deutsches Elektronen-Synchrotron",
+        "lastname": "Meents",
+        "userId": "2468",
+        "username": "meents"
+    },
+    "asapo": {
+        "beamtimeClbtTokenPath": "shared/asapo-token-clbt.txt",
+        "beamtimeTokenPath": "shared/asapo-token.txt",
+        "endpoint": "asapo-ps-0.desy.de:8400"
+    },
+    "beamline": "p09",
+    "beamlineAlias": "P09",
+    "beamlineSetup": "EH3 Open port",
+    "beamtimeId": "11016750",
+    "contact": "None",
+    "corePath": "/asap3/petra3/gpfs/p09/2023/data/11016750",
+    "eventEnd": "2023-07-17 09:00:00",
+    "eventStart": "2023-07-06 09:00:00",
+    "facility": "PETRA III",
+    "generated": "2023-07-06 08:27:54",
+    "leader": {
+        "email": "",
+        "institute": "",
+        "lastname": "",
+        "userId": "",
+        "username": ""
+    },
+    "onlineAnalysis": {
+        "reservedNodes": [
+            "max-p3a020"
+        ],
+        "slurmPartition": "ponline_p09",
+        "slurmReservation": "11016750",
+        "sshPrivateKeyPath": "shared/id_rsa",
+        "sshPublicKeyPath": "shared/id_rsa.pub",
+        "userAccount": "bttest04"
+    },
+    "pi": {
+        "email": "",
+        "institute": "",
+        "lastname": "",
+        "userId": "",
+        "username": ""
+    },
+    "proposalId": "20010001",
+    "proposalType": "C",
+    "retentionPeriod": "onsite",
+    "title": "",
+    "unixId": "None",
+    "users": {
+        "doorDb": [
+            "meents",
+            "rodria",
+            "pontusfr",
+            "gumprlar",
+            "mbehring",
+            "falkesve",
+            "creonann",
+            "galchenm",
+            "guents",
+            "tvsreevi",
+            "janmeyer",
+            "lieskej",
+            "reinkepa",
+            "bereciap",
+            "bergthoj",
+            "sfranco",
+            "plueckth"
+        ],
+        "special": [],
+        "unknown": []
+    }
+}
