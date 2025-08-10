@@ -21,6 +21,11 @@ split_lines = 250
 chunk_size = 1000
 sleep_time = 5
 
+def get_files_in_range(raw_dir, ext, data_range):
+    files = glob.glob(f"{raw_dir}/*.{ext}")
+    return sorted([f for f in files if int(Path(f).stem.split("_")[-1]) in data_range])
+
+
 def serial_data_processing(folder_with_raw_data, current_data_processing_folder,
                             cell_file, indexing_method, user, reserved_nodes, slurm_partition, 
                             sshPrivateKeyPath, sshPublicKeyPath, data_range=None, iteration=0):
@@ -67,28 +72,21 @@ def serial_data_processing(folder_with_raw_data, current_data_processing_folder,
     else:
         list_h5 = f"list_h5_{iteration}.lst"
         list_cbf = f"list_cbf_{iteration}.lst"
-        cbf_files = glob.glob(f"{raw}/*.cbf")
-        h5_files = glob.glob(f"{raw}/*.h5")
-        while len(cbf_files) < chunk_size and len(h5_files) < chunk_size:
-            time.sleep(sleep_time)
-            cbf_files = glob.glob(f"{raw}/*.cbf")
-            h5_files = glob.glob(f"{raw}/*.h5")
-            
-        cbf_files_to_process = sorted([file for file in cbf_files if int(file.split(".")[0].split("_")[-1]) in data_range])
-        h5_files_to_process = sorted([file for file in h5_files if int(file.split(".")[0].split("_")[-1]) in data_range])
-        
-        with open(list_cbf, "w") as f:
-            f.write("\n".join(cbf_files_to_process))
 
-        with open(list_h5, "w") as f:
-            f.write("\n".join(h5_files_to_process))
+    cbf_files_to_process = get_files_in_range(raw, "cbf", data_range)
+    h5_files_to_process = get_files_in_range(raw, "h5", data_range)
+
+    while len(cbf_files_to_process) < chunk_size and len(h5_files_to_process) < chunk_size:
+        time.sleep(sleep_time)
+        cbf_files_to_process = get_files_in_range(raw, "cbf", data_range)
+        h5_files_to_process = get_files_in_range(raw, "h5", data_range)
+
+    with open(list_cbf, "w") as f:
+        f.write("\n".join(cbf_files_to_process))
+
+    with open(list_h5, "w") as f:
+        f.write("\n".join(h5_files_to_process))
     
-    last_file = cbf_files_to_process[-1] if cbf_files_to_process else (h5_files_to_process[-1] if h5_files_to_process else None)
-
-    if last_file:
-        while not os.path.exists(last_file):
-            time.sleep(5)
-
     # Determine filetype
     filetype = 0
     if os.path.getsize(list_h5) > 0:
