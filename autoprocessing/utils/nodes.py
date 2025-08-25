@@ -2,7 +2,7 @@ import os
 import subprocess
 import shlex
 
-LIMIT_FOR_RESERVED_NODES = 25
+LIMIT_FOR_RESERVED_NODES = 1000
 def are_the_reserved_nodes_overloaded(node_list):
     """Check if the reserved nodes are overloaded by counting running jobs.
     Args:

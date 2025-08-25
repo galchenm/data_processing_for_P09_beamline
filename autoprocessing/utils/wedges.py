@@ -7,7 +7,6 @@ import sys
 import time
 import math
 import fabio
-import gemmi
 import glob
 import re
 import shutil
@@ -24,6 +23,7 @@ from utils.templates import filling_template_wedges
 from utils.log_setup import setup_logger
 
 SLEEP_TIME = 10 
+time_to_wait_appearing_raw_folder = 20
 
 def xds_start(
     current_data_processing_folder,
@@ -167,7 +167,11 @@ def wedges_processing(
     sshPublicKeyPath
     ):
     """Main function to process command line arguments and call the filling_template_wedges function."""
-
+    
+    while not os.path.exists(folder_with_raw_data)  and len(glob.glob(folder_with_raw_data + '/*.cbf')) < 1000:
+        logger.info(f"Waiting for the folder {folder_with_raw_data} to be available...")
+        time.sleep(time_to_wait_appearing_raw_folder)
+    
     # Setup logger
     logger = setup_logger(log_dir=current_data_processing_folder.split('processed')[0] + 'processed', log_name="wedges_processing")
     

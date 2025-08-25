@@ -6,7 +6,6 @@ import os
 import sys
 import glob
 import time
-import gemmi
 import re
 import shutil
 import subprocess
@@ -17,6 +16,8 @@ import shlex
 from utils.nodes import are_the_reserved_nodes_overloaded
 from utils.templates import filling_template_rotational
 from utils.log_setup import setup_logger
+
+time_to_wait_appearing_raw_folder = 20
 
 def build_ssh_command(user, sshPrivateKeyPath, login_node):
     return (
@@ -100,6 +101,12 @@ def rotational_processing(
     distance_offset, command_for_data_processing, XDS_INP_template,
     user, reserved_nodes, slurm_partition, sshPrivateKeyPath, sshPublicKeyPath):
     """Main function to process the command line arguments and call the filling_template_rotational function."""
+    
+    while not os.path.exists(folder_with_raw_data)  and len(glob.glob(folder_with_raw_data + '/*.cbf')) < 1000:
+        logger.info(f"Waiting for the folder {folder_with_raw_data} to be available...")
+        time.sleep(time_to_wait_appearing_raw_folder)
+        
+    
     # Setup logger
     logger = setup_logger(log_dir=current_data_processing_folder.split('processed')[0] + 'processed', log_name="rotational_processing")
     

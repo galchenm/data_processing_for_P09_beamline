@@ -20,6 +20,7 @@ import logging
 split_lines = 250
 chunk_size = 1000
 sleep_time = 5
+time_to_wait_appearing_raw_folder = 20
 
 def serial_data_processing(folder_with_raw_data, current_data_processing_folder,
                             cell_file, indexing_method, user, reserved_nodes, slurm_partition, 
@@ -182,6 +183,11 @@ def serial_processing(
         sshPublicKeyPath
     ):
     """Main function to handle command line arguments and initiate data processing."""
+    while not os.path.exists(folder_with_raw_data)  and len(glob.glob(folder_with_raw_data + '/*.cbf')) < 1000:
+        logger.info(f"Waiting for the folder {folder_with_raw_data} to be available...")
+        time.sleep(time_to_wait_appearing_raw_folder)
+        
+    
     # Setup logger
     logger = setup_logger(log_dir=current_data_processing_folder.split('processed')[0] + 'processed', log_name="serial_processing")
     
@@ -226,6 +232,7 @@ def serial_processing(
             data_range=data_range, iteration=iteration
         )
         iteration += 1
+        time.sleep(time_to_wait_appearing_raw_folder)
 
     # Create flag file
     flag_file = Path(current_data_processing_folder) / 'flag.txt'
