@@ -5,3 +5,4 @@ __pycache__/
 .pytest_cache/
 ./autoprocessing/__pycache__/
 ./autoprocessing/utils/__pycache__/
+*.pyc
