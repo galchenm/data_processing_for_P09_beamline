@@ -21,6 +21,9 @@ def filling_template_rotational(folder_with_raw_data, current_data_processing_fo
     if not info_path.exists() or info_path.stat().st_size == 0:
         print(f"Error: info.txt not found or empty in {folder_with_raw_data}")
         return
+    
+    #copy info.txt in the processed folder
+    shutil.copy(info_path, current_data_processing_folder / 'xds/info.txt')
 
     DETECTOR_DISTANCE = extract_value_from_info(info_path, "distance") + DISTANCE_OFFSET
     
@@ -77,7 +80,9 @@ def filling_template_serial(folder_with_raw_data, current_data_processing_folder
     if not info_path.exists() or info_path.stat().st_size == 0:
         print(f"No valid info.txt found in {folder_with_raw_data}")
         return
-
+    #copy info.txt in the processed folder
+    shutil.copy(info_path, current_data_processing_folder / 'info.txt')
+    
     with open(info_path) as f:
         content = f.read()
 
@@ -134,6 +139,8 @@ def filling_template_wedges(folder_with_raw_data, current_data_processing_folder
     if not info_path.exists() or info_path.stat().st_size == 0:
         print(f"Error: info.txt not found or empty in {folder_with_raw_data}")
         return
+    #copy info.txt in the processed folder
+    shutil.copy(info_path, current_data_processing_folder / 'info.txt')
 
     DETECTOR_DISTANCE = extract_value_from_info(info_path, "distance") + DISTANCE_OFFSET
     
